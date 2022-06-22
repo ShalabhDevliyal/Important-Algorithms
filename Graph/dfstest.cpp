@@ -22,8 +22,8 @@ void dfs(vector<int>*arr,int u,bool *visited)
 int main()
 {
 	int n;
+	cout<<"No of vertices : ";
 	cin>>n;
-	int x,y;
 	vector<int>arr[n];
 	bool visited[n]={false};
 	
