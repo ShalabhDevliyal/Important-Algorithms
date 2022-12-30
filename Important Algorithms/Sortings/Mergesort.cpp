@@ -1,66 +1,65 @@
 #include<iostream>
+#include<vector>
 using namespace std;
 
-int count=0;
-void Merge(int A[],int low,int mid,int high)
+void input(vector<int>&v,int n)
 {
-	int i = low;
-	int j = mid+1;
-	int k = 0;
-	int B[high - low +1];
-	 
-	 while(i<=mid && j<=high)
-	 {
-	 	if(A[i]<=A[j])
-	 	{
-	 		count++;
-	 		B[k++] = A[i++];
-		 }
-		 else{
-		 	count++;
-		 	B[k++] = A[j++];
-		 }
-	 }
-	 while(i<=mid)
-	 {
-	 	B[k++]=A[i++];
-	 }
-	 while(j<=high)
-	 {
-	 	B[k++]=A[j++];
-	 }
-	 k=0;
-	 for(int n=low;n<=high;n++)
-	 {
-	 	A[n] = B[k++];
-	 }
+    cout<<"enter:";
+    for(int i=0;i<n;i++)
+    {
+        cin>>v[i];
+    }
 }
 
-void MergeSort(int A[],int low,int high)
+void print(vector<int>v,int n)
 {
-	if(low<high)
-	{
-		int mid = (high +low)/2;
-		MergeSort( A,low,mid);//divition in left side
-		MergeSort( A,mid+1,high);
-		Merge(A,low,mid,high);
-	}
+    cout<<"sorted vector using merge sort:";
+    for(int i=0;i<n;i++)
+        cout<<v[i]<<" ";
+}
+void merge(vector<int>&v,int l,int h,int mid)
+{
+    int i=l,j=mid+1;
+    vector<int>v1;
+    
+    while(i<=mid && j<=h)
+    {
+        if(v[i]<=v[j])
+            v1.push_back(v[i++]);
+        else
+            v1.push_back(v[j++]);
+    }
+    while(i<=mid)
+        v1.push_back(v[i++]);
+    while(j<=h)
+        v1.push_back(v[j++]);
+    
+    j=0;
+    for(i=l;i<=h;i++)
+    {
+        v[i]=v1[j++];
+    }
+
+}
+void mergesort(vector<int>&v,int l,int h)
+{
+    int mid;
+    if(l<h)
+    {
+        mid=l+(h-l)/2;
+        mergesort(v,l,mid);
+        mergesort(v,mid+1,h);
+        merge(v,l,h,mid);
+    }
 }
 int main()
 {
-	int n;
-	cout<<"enter the size of unsorted array"<<endl;
-	cin>>n;
-	int arr[n];
-	for(int i=0;i<n;i++)
-	{
-		cin>>arr[i];
-	}
-	MergeSort(arr,0,n-1);
-	cout<<"the sorted array is";
-	for(int i=0;i<n;i++)
-	{
-		cout<<arr[i]<<" ";
-	}
-	cout<<"no of comparison "<<count;
+    cout<<"enter size of vector:";
+    int n;
+    cin>>n;
+    vector<int>v(n);
+    
+    input(v,n);
+    mergesort(v,0,n-1);
+    print(v,n);
 }
